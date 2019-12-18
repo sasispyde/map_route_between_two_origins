@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>My First Google Map</h1>
+
+<div id="googleMap" style="width:100%;height:400px;"></div>
+
+<script>
+function myMap() {
+var mapProp= {
+  center:new google.maps.LatLng(51.508742,-0.120850),
+  zoom:5,
+};
+var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=myMap"></script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Place Autocomplete Address Form</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <style>
+      #locationField, #controls {
+        position: relative;
+        width: 480px;
+      }
+      #autocomplete {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 99%;
+      }
+      .label {
+        text-align: right;
+        font-weight: bold;
+        width: 100px;
+        color: #303030;
+        font-family: "Roboto";
+      }
+      #address {
+        border: 1px solid #000090;
+        background-color: #f0f9ff;
+        width: 480px;
+        padding-right: 2px;
+      }
+      #address td {
+        font-size: 10pt;
+      }
+      .field {
+        width: 99%;
+      }
+      .slimField {
+        width: 80px;
+      }
+      .wideField {
+        width: 200px;
+      }
+      #locationField {
+        height: 20px;
+        margin-bottom: 2px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="locationField">
+      <input id="autocomplete"
+             placeholder="Enter your address"
+             onFocus="geolocate()"
+             type="text"/>
+    </div>
+
+    <script>
+// This sample uses the Autocomplete widget to help the user select a
+// place, then it retrieves the address components associated with that
+// place, and then it populates the form fields with those details.
+// This sample requires the Places library. Include the libraries=places
+// parameter when you first load the API. For example:
+// <script
+// src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+
+var placeSearch, autocomplete;
+
+var componentForm = {
+  street_number: 'short_name',
+  route: 'long_name',
+  locality: 'long_name',
+  administrative_area_level_1: 'short_name',
+  country: 'long_name',
+  postal_code: 'short_name'
+};
+
+function initAutocomplete() {
+  // Create the autocomplete object, restricting the search predictions to
+  // geographical location types.
+  autocomplete = new google.maps.places.Autocomplete(
+      document.getElementById('autocomplete'), {types: ['geocode']});
+
+  // Avoid paying for data that you don't need by restricting the set of
+  // place fields that are returned to just the address components.
+  autocomplete.setFields(['address_component']);
+
+  // When the user selects an address from the drop-down, populate the
+  // address fields in the form.
+  autocomplete.addListener('place_changed', fillInAddress);
+}
+
+// Bias the autocomplete object to the user's geographical location,
+// as supplied by the browser's 'navigator.geolocation' object.
+function geolocate() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var geolocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+      };
+      var circle = new google.maps.Circle(
+          {center: geolocation, radius: position.coords.accuracy});
+      autocomplete.setBounds(circle.getBounds());
+    });
+  }
+}
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUqVS24_2CF3d-BXMVUnZ2OS6d7LnId6w&libraries=places&callback=initAutocomplete"
+        async defer></script>
+  </body>
+</html>
+
+
+
+
+  // function myMap(lat,long) {
+
+  //   var myLatlng = new google.maps.LatLng(lat,long);
+
+  //   var myCenter1 = new google.maps.LatLng(51.508742,-0.120850);
+
+  //   var marker1 = new google.maps.Marker({
+  //       position: myCenter1,
+  //   });
+
+  //   var mapOptions = {
+  //     zoom: 4,
+  //     center: myLatlng
+  //   }
+  //   var map = new google.maps.Map(document.getElementById("googleMap"), mapOptions);
+
+  //   var marker = new google.maps.Marker({
+  //       position: myLatlng,
+  //   });
+
+  //   // To add the marker to the map, call setMap();
+  //   marker.setMap(map);
+  //   marker1.setMap(map);
+  //   }
+
+//---------------------------------------------------------------------------------------
+
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsxnyCpmnavMzyK6L-KUNFG5wtOgNVgnM&libraries=places&callback=initializeAutocomplete"
+    async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+</head>
+
+<body>
+<label>Pickup Location</label>
+<input type="text"  name="address"  onFocus="initializeAutocomplete()" id="locality" ><br><br>
+
+<label>Drop Location</label>
+<input type="text" name="drop_location" id="drop_location" class="form-control" placeholder="Dropoff Location"><br>
+<p id="dist"></p>
+<div id="googleMap" style="width:100%;height:550px;"></div>
+
+
+<script type="text/javascript">
+
+  var lat1;
+  var lng1;
+  var lat2;
+  var lng2;
+  var pickupdata=[];
+  var dropdata=[];
+
+  // initial Map
+
+  window.onload = function myMap() {
+  var mapProp= {
+    center:new google.maps.LatLng(11.342423,77.728165),
+    zoom:6,
+  };
+  var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+  }
+
+
+    function myMap(lat,long) {
+
+        var myLatlng = new google.maps.LatLng(lat,long);
+
+        var mapOptions = {
+          zoom: 11,
+          center: myLatlng,
+        }
+        var map = new google.maps.Map(document.getElementById("googleMap"), mapOptions);
+
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            icon: {
+            url: "endMarker.png"
+          }
+        });
+
+        marker.setMap(map);
+    }
+
+  // Auto Complete Function
+
+  function initializeAutocomplete(){
+
+    toAutocomplete = new google.maps.places.Autocomplete(document.getElementById('drop_location'), options);
+
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+
+    var directionsService = new google.maps.DirectionsService;
+
+    var input = document.getElementById('locality');
+
+    var options = {};
+
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+
+    // pickup Location
+
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+      var place = autocomplete.getPlace();
+      lat1 = place.geometry.location.lat();
+      lng1 = place.geometry.location.lng();
+      pickupdata=[lat1,lng1];
+      myMap(lat1,lng1);
+      pickup();
+    });
+
+    // Drop Location
+
+      google.maps.event.addListener(toAutocomplete, 'place_changed', function () {
+      var droploc = toAutocomplete.getPlace();
+      lat2 = droploc.geometry.location.lat();
+      lng2 = droploc.geometry.location.lng();
+      dropdata=[lat2,lng2];
+      myMap(lat2,lng2);
+      pickup();
+      });
+  }
+
+
+      // function to find if the values are valid and not empty
+
+      function pickup()
+      {
+          if(pickupdata.length!=0&&dropdata.length!=0)
+          {
+          if(lat1!=0 && lng1!=0 && lat2!=0 && lng2!=0)
+          {
+            route(pickupdata,dropdata);
+          }
+          }
+      }
+
+      // find route between the pickup and drop location
+
+      function route(pickupdata,dropdata) {
+        var directionsDisplay = new google.maps.DirectionsRenderer;
+        var directionsService = new google.maps.DirectionsService;
+        var map = new google.maps.Map(document.getElementById('googleMap'), {
+          zoom: 14,
+          center: {lat: 11.342423, lng: 77.728165}
+        });
+        directionsDisplay.setMap(map);
+
+        // GoogleMap_selected(pickupdata,dropdata);
+
+        calculateAndDisplayRoute(directionsService, directionsDisplay,pickupdata,dropdata);
+      }
+
+      // calculate the route
+
+      function calculateAndDisplayRoute(directionsService, directionsDisplay,pickupdata,dropdata) {
+
+        var selectedMode = "DRIVING"; 
+        distance(pickupdata,dropdata);
+        directionsService.route({
+          origin: {lat:pickupdata[0], lng: pickupdata[1]},  
+          destination: {lat: dropdata[0], lng: dropdata[1]},  
+          travelMode: google.maps.TravelMode[selectedMode]
+        }, function(response, status) {
+          if (status == 'OK') {
+            directionsDisplay.setDirections(response);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+
+      }
+
+    function distance(pickupdata,dropdata) {
+        var R = 6371; // km (change this constant to get miles)
+        var dLat = (dropdata[0]-pickupdata[0]) * Math.PI / 180;
+        var dLon = (dropdata[1]-pickupdata[1]) * Math.PI / 180;
+        var distance;
+        var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
+          Math.sin(dLon/2) * Math.sin(dLon/2);
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        var d = R * c;
+        if (d>1)
+          { 
+            distance=Math.round(d)+"km";
+          }
+        else if (d<=1) 
+          {
+            distance= Math.round(d*1000)+"m";
+          }
+         $("#dist").append(distance);
+      }
+
+//---------------------------------------------Final Code------------------------------------------------
+
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="utf-8">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsxnyCpmnavMzyK6L-KUNFG5wtOgNVgnM&libraries=places&callback=initializeAutocomplete"
+    async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+</head>
+
+<body>
+<label>Pickup Location</label>
+<input type="text"  name="address"  onFocus="initializeAutocomplete()" id="locality" ><br><br>
+
+<label>Drop Location</label>
+<input type="text" name="drop_location" id="drop_location" class="form-control" placeholder="Dropoff Location"><br>
+<p id="dist"></p>
+<div id="googleMap" style="width:100%;height:550px;"></div>
+
+
+<script type="text/javascript">
+
+  var lat1;
+  var lng1;
+  var lat2;
+  var lng2;
+  var pickupdata=[];
+  var dropdata=[];
+
+  // initial Map
+
+  window.onload = function myMap() 
+  {
+    var mapProp= 
+    {
+      center:new google.maps.LatLng(11.342423,77.728165),
+      zoom:6,
+    };
+    var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+  }
+
+  // function to set a first mark in a google map
+
+  function myMap(lat,long) 
+  {
+        var myLatlng = new google.maps.LatLng(lat,long);
+        var mapOptions = {
+          zoom: 11,
+          center: myLatlng,
+        }
+        var map = new google.maps.Map(document.getElementById("googleMap"), mapOptions);
+
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            icon: {
+            url: "location_icon.png"
+          }
+        });
+        marker.setMap(map);
+  }
+
+  // Auto Complete Function
+
+  function initializeAutocomplete()
+  {
+
+    toAutocomplete = new google.maps.places.Autocomplete(document.getElementById('drop_location'), options);
+
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+
+    var directionsService = new google.maps.DirectionsService;
+
+    var input = document.getElementById('locality');
+
+    var options = {};
+
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+
+    // pickup Location
+
+    google.maps.event.addListener(autocomplete, 'place_changed', function() 
+    {
+      var place = autocomplete.getPlace();
+      lat1 = place.geometry.location.lat();
+      lng1 = place.geometry.location.lng();
+      pickupdata=[lat1,lng1];
+      myMap(lat1,lng1);
+      pickup();
+    });
+
+    // Drop Location
+
+      google.maps.event.addListener(toAutocomplete, 'place_changed', function () 
+      {
+      var droploc = toAutocomplete.getPlace();
+      lat2 = droploc.geometry.location.lat();
+      lng2 = droploc.geometry.location.lng();
+      dropdata=[lat2,lng2];
+      myMap(lat2,lng2);
+      pickup();
+      });
+  }
+
+
+  // function to find if the values are valid and not empty
+
+  function pickup()
+  {
+      if(pickupdata.length!=0&&dropdata.length!=0)
+      {
+      if(lat1!=0 && lng1!=0 && lat2!=0 && lng2!=0)
+      {
+        route(pickupdata,dropdata);
+      }
+    }
+  }
+
+  // find route between the pickup and drop location
+
+  function route(pickupdata,dropdata) 
+  {
+    var directionsDisplay = new google.maps.DirectionsRenderer;
+    var directionsService = new google.maps.DirectionsService;
+    var map = new google.maps.Map(document.getElementById('googleMap'), 
+    {
+      zoom: 14,
+      center: {lat: 11.342423, lng: 77.728165}
+    });
+    directionsDisplay.setMap(map);
+
+    GoogleMap_selected(pickupdata,dropdata);
+  }
+
+    // draw a route between the two points
+
+  function GoogleMap_selected(pickupdata,dropdata) 
+  {
+      var from = new google.maps.LatLng(pickupdata[0], pickupdata[1]);
+      var to = new google.maps.LatLng(dropdata[0], dropdata[1]);
+
+      var directionsService = new google.maps.DirectionsService();
+      var directionsRequest = 
+      {
+        origin: {lat:pickupdata[0], lng: pickupdata[1]},
+        destination: {lat: dropdata[0], lng: dropdata[1]},
+        travelMode: google.maps.DirectionsTravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.METRIC
+      };
+
+      distance(pickupdata,dropdata);
+
+      var mapOptions = 
+      {
+        zoom: 10,
+        center: new google.maps.LatLng(dropdata[0], dropdata[1]),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      var map = new google.maps.Map(document.getElementById("googleMap"), mapOptions);
+
+      directionsService.route(
+        directionsRequest,
+
+      function(response, status) 
+      {
+
+          if (status == google.maps.DirectionsStatus.OK) 
+          {
+            new google.maps.DirectionsRenderer({
+              map: map,
+              directions: response,
+              suppressMarkers: true
+            });
+            var leg = response.routes[0].legs[0];
+            makeMarker(leg.start_location, icons.start, "title", map);
+            makeMarker(leg.end_location, icons.end, 'title', map);
+
+          } else 
+          {
+            alert("Unable to retrive route");
+          }
+      });
+
+    // ICON settings
+
+    var icons = 
+    {
+      start: new google.maps.MarkerImage(
+        // URL
+        'startMarker.png',
+        // (width,height)
+        new google.maps.Size(44, 50),
+        // The origin point (x,y)
+        new google.maps.Point(0, 0),
+        // The anchor point (x,y)
+        new google.maps.Point(22, 32)),
+      end: new google.maps.MarkerImage(
+        // URL
+        'endMarker.png',
+        // (width,height)
+        new google.maps.Size(44, 50),
+        // The origin point (x,y)
+        new google.maps.Point(0, 0),
+        // The anchor point (x,y)
+        new google.maps.Point(22, 32))
+    };
+
+  }
+
+  // make a custom marker in a google map
+
+  function makeMarker(position, icon, title, map) 
+  {
+    new google.maps.Marker({
+      position: position,
+      map: map,
+      icon: icon,
+      title: title
+    });
+  }
+
+  // calculate the distance between two points
+
+  function distance(pickupdata,dropdata) 
+  {
+    var R = 6371; // km (change this constant to get miles)
+    var dLat = (dropdata[0]-pickupdata[0]) * Math.PI / 180;
+    var dLon = (dropdata[1]-pickupdata[1]) * Math.PI / 180;
+    var distance;
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
+    Math.sin(dLon/2) * Math.sin(dLon/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var d = R * c;
+    if (d>1)
+      { 
+        distance=Math.round(d)+"km";
+      }
+    else if (d<=1) 
+      {
+        distance= Math.round(d*1000)+"m";
+      }
+      $("#dist").append(distance);
+  }
+
+</script>
+
+
+
+
+
+
+
+
+
+?>
+
+
+
+
+//---------------------------------------------------------------------------------------------
+
+
+    // draw a route between the two points
+
+  // function GoogleMap_selected(pickupdata,dropdata) 
+  // {
+
+
+  //     var from = new google.maps.LatLng(pickupdata[0], pickupdata[1]);
+  //     var to = new google.maps.LatLng(dropdata[0], dropdata[1]);
+
+  //     var directionsService = new google.maps.DirectionsService();
+
+  //     for (var i = dropdata.length - 1; i >= 0; i--) {
+
+  //     var directionsRequest = 
+  //     {
+  //       origin: {lat:pickupdata[0], lng: pickupdata[1]},
+  //       destination: {lat: dropdata[i][0], lng: dropdata[i][1]},
+  //       travelMode: google.maps.DirectionsTravelMode.DRIVING,
+  //       unitSystem: google.maps.UnitSystem.METRIC
+  //     };
+
+  //     distance(pickupdata,dropdata);
+
+  //     var mapOptions = 
+  //     {
+  //       zoom: 10,
+  //       center: new google.maps.LatLng(dropdata[0], dropdata[1]),
+  //       mapTypeId: google.maps.MapTypeId.ROADMAP
+  //     };
+  //     var map = new google.maps.Map(document.getElementById("googleMap"), mapOptions);
+
+  //     directionsService.route(
+  //       directionsRequest,
+
+  //     function(response, status) 
+  //     {
+
+  //         if (status == google.maps.DirectionsStatus.OK) 
+  //         {
+  //           new google.maps.DirectionsRenderer({
+  //             map: map,
+  //             directions: response,
+  //             suppressMarkers: true
+  //           });
+  //           var leg = response.routes[0].legs[0];
+  //           makeMarker(leg.start_location, icons.start, "title", map);
+  //           makeMarker(leg.end_location, icons.end, 'title', map);
+
+  //         } else 
+  //         {
+  //           alert("Unable to retrive route");
+  //         }
+  //     });
+
+  //   // ICON settings
+
+  //   var icons = 
+  //   {
+  //     start: new google.maps.MarkerImage(
+  //       // URL
+  //       'images/startMarker.png',
+  //       // (width,height)
+  //       new google.maps.Size(44, 50),
+  //       // The origin point (x,y)
+  //       new google.maps.Point(0, 0),
+  //       // The anchor point (x,y)
+  //       new google.maps.Point(22, 32)),
+  //     end: new google.maps.MarkerImage(
+  //       // URL
+  //       'images/endMarker.png',
+  //       // (width,height)
+  //       new google.maps.Size(44, 50),
+  //       // The origin point (x,y)
+  //       new google.maps.Point(0, 0),
+  //       // The anchor point (x,y)
+  //       new google.maps.Point(22, 32))
+  //   };
+
+  // }
+// }
+
+  // make a custom marker in a google map
+
+  // function makeMarker(position, icon, title, map) 
+  // {
+  //   new google.maps.Marker({
+  //     position: position,
+  //     map: map,
+  //     icon: icon,
+  //     title: title
+  //   });
+  // }
+
+
+
+  //================================= final code for displaying data=========================================
+
+
+      draw a route between the two points
+
+  function GoogleMap_selected(pickupdata,dropdata,directionsDisplay) 
+  {
+      var len=dropdata.length;
+      // var from = new google.maps.LatLng(pickupdata[0], pickupdata[1]);
+      // var to = new google.maps.LatLng(dropdata[len-1][0], dropdata[len-1][1]);
+
+      for (var i = 0; i < len; i++) {
+        waypoints.push({
+          location:
+          {
+          lat:dropdata[i][0],
+          lng:dropdata[i][1]
+          },
+          stopover: true  
+        });
+      }
+
+      var directionsService = new google.maps.DirectionsService();
+      var directionsRequest = 
+      {
+        origin: {lat:pickupdata[0], lng: pickupdata[1]},
+        destination: {lat: dropdata[len-1][0], lng: dropdata[len-1][1]},
+        waypoints:waypoints,
+        optimizeWaypoints: true,
+        travelMode: google.maps.DirectionsTravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.METRIC
+      };
+
+      distance(pickupdata,dropdata);
+
+      var mapOptions = 
+      {
+        zoom: 10,
+        center: new google.maps.LatLng(dropdata[len-1][0], dropdata[len-1][1]),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      var map = new google.maps.Map(document.getElementById("googleMap"), mapOptions);
+
+      directionsService.route(
+        directionsRequest,
+
+      function(response, status) 
+      {
+
+          if (status == google.maps.DirectionsStatus.OK) 
+          {
+            new google.maps.DirectionsRenderer({
+              map: map,
+              directions: response,
+              suppressMarkers: true
+            });
+            var leg = response.routes[0].legs[0];
+            console.log(response);
+            directionDisplay.setDirections(response);
+            // makeMarker(leg.start_location, icons.start, "title", map);
+            // makeMarker(leg.end_location, icons.end, 'title', map);
+
+          } else 
+          {
+            alert("Unable to retrive route");
+          }
+      });
+
+    // ICON settings
+
+    var icons = 
+    {
+      start: new google.maps.MarkerImage(
+        // URL
+        'images/startMarker.png',
+        // (width,height)
+        new google.maps.Size(44, 50),
+        // The origin point (x,y)
+        new google.maps.Point(0, 0),
+        // The anchor point (x,y)
+        new google.maps.Point(22, 32)),
+      end: new google.maps.MarkerImage(
+        // URL
+        'images/endMarker.png',
+        // (width,height)
+        new google.maps.Size(44, 50),
+        // The origin point (x,y)
+        new google.maps.Point(0, 0),
+        // The anchor point (x,y)
+        new google.maps.Point(22, 32))
+    };
+
+  }
+
+  // make a custom marker in a google map
+
+  function makeMarker(position, icon, title, map) 
+  {
+    new google.maps.Marker({
+      position: position,
+      map: map,
+      icon: icon,
+      title: title
+    });
+  }
+
+  // calculate the distance between two points
+
+  function distance(pickupdata,dropdata) 
+  {
+    var R = 6371; // km (change this constant to get miles)
+    var dLat = (dropdata[dropdata.length-1][0]-pickupdata[0]) * Math.PI / 180;
+    var dLon = (dropdata[dropdata.length-1][1]-pickupdata[1]) * Math.PI / 180;
+    var distance;
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI / 180 ) * Math.cos(lat2 * Math.PI / 180 ) *
+    Math.sin(dLon/2) * Math.sin(dLon/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var d = R * c;
+    if (d>1)
+      { 
+        distance=Math.round(d)+" km";
+      }
+    else if (d<=1) 
+      {
+        distance= Math.round(d*1000)+"m";
+      }
+      $("#dist").append(distance);
+  }
